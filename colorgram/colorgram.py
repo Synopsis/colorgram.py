@@ -20,7 +20,6 @@ Hsl = namedtuple('Hsl', ('h', 's', 'l'))
 class Color(object):
     def __init__(self, r, g, b, proportion):
         # linear to sRGB - 2.2 Gamma
-        #self.rgb = Rgb( int(round(pow(r, 2.2))), int(round(pow(g, 2.2))), int(round(pow(b, 2.2))) )
         self.rgb = Rgb( gamma(r), gamma(g), gamma(b) )
         #self.rgb = Rgb( r,g,b )
         self.proportion = proportion
@@ -47,10 +46,10 @@ def extract(f, number_of_colors):
     used.sort(key=lambda x: x[0], reverse=True)
     return get_colors(samples, used, number_of_colors)
 
-def gamma(sample):
+def linearize(sample):
     return int( round( pow( sample/255.0, 1.0/2.2) * 255.0))
 
-def linearize(sample):
+def gamma(sample):
     return int( round( pow( sample/255.0, 2.2) * 255.0))
 
 def sample(image):
@@ -86,8 +85,8 @@ def sample(image):
             # Everything's shifted into place from the top two
             # bits' original position - that is, bits 7-8.
             packed  = (h & top_two_bits) << 4
-            packed |= (l & top_two_bits) << 2
-            packed |= (s & top_two_bits) << 0
+            packed |= (s & top_two_bits) << 2
+            packed |= (l & top_two_bits) << 0
 
             # Due to a bug in the original colorgram.js, RGB isn't included.
             # The original author tries using negative bit shifts, while in
