@@ -21,7 +21,8 @@ class Color(object):
     def __init__(self, r, g, b, proportion):
         # linear to sRGB - 2.2 Gamma
         #self.rgb = Rgb( int(round(pow(r, 2.2))), int(round(pow(g, 2.2))), int(round(pow(b, 2.2))) )
-        self.rgb = Rgb( r,g,b )
+        self.rgb = Rgb( gamma(r), gamma(g), gamma(b) )
+        #self.rgb = Rgb( r,g,b )
         self.proportion = proportion
     
     def __repr__(self):
@@ -47,10 +48,10 @@ def extract(f, number_of_colors):
     return get_colors(samples, used, number_of_colors)
 
 def linearize(sample):
-    return int( round( pow( sample/255.0, 1.0/2.2) / 255.0))
+    return int( round( pow( sample/255.0, 1.0/2.2) * 255.0))
 
 def gamma(sample):
-    return int( round( pow( sample/255.0, 2.2) / 255.0))
+    return int( round( pow( sample/255.0, 2.2) * 255.0))
 
 def sample(image):
     top_two_bits = 0b11000000
