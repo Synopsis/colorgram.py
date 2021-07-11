@@ -46,6 +46,12 @@ def extract(f, number_of_colors):
     used.sort(key=lambda x: x[0], reverse=True)
     return get_colors(samples, used, number_of_colors)
 
+def linearize(sample):
+    return int( round( pow( sample/255.0, 1.0/2.2) / 255.0)
+
+def gamma(sample):
+    return int( round( pow( sample/255.0, 2.2) / 255.0)
+
 def sample(image):
     top_two_bits = 0b11000000
 
@@ -65,16 +71,15 @@ def sample(image):
             h, s, l = hsl(r, g, b)
 
             #linearize before sampling
-            r = int(round(pow(r, 1.0/2.2)))
-            g = int(round(pow(g, 1.0/2.2)))
-            b = int(round(pow(b, 1.0/2.2)))
+            r = linearize(r)
+            g = linearize(g)
+            b = linearize(b)
 
             # Standard constants for converting RGB to relative luminance.
 #            Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
-
-            h = int(round(pow(h, 1.0/2.2)))
-            s = int(round(pow(s, 1.0/2.2)))
-            l = int(round(pow(l, 1.0/2.2)))
+            h = linearize(h)
+            s = linearize(s)
+            l = linearize(l)
 
 
             # Everything's shifted into place from the top two
