@@ -69,7 +69,7 @@ def sample(image):
 
             h, s, l = hsl(r, g, b)
             # Standard constants for converting RGB to relative luminance.
-            Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
+#            Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
 
             #Y = int(round(pow(Y, 2.2)))
             #h = int(round(pow(h, 2.2)))
@@ -78,9 +78,9 @@ def sample(image):
 
             # Everything's shifted into place from the top two
             # bits' original position - that is, bits 7-8.
-            packed  = (Y & top_two_bits) << 4
-            packed |= (h & top_two_bits) << 2
-            packed |= (l & top_two_bits) << 0
+            packed  = (h & top_two_bits) << 4
+            packed |= (l & top_two_bits) << 2
+            packed |= (s & top_two_bits) << 0
 
             # Due to a bug in the original colorgram.js, RGB isn't included.
             # The original author tries using negative bit shifts, while in
