@@ -71,9 +71,9 @@ def sample(image):
             # Standard constants for converting RGB to relative luminance.
             Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
 
-            Y = int(round(pow(Y, 2.2)))
-            h = int(round(pow(h, 2.2)))
-            l = int(round(pow(l, 2.2)))
+            #Y = int(round(pow(Y, 2.2)))
+            #h = int(round(pow(h, 2.2)))
+            #l = int(round(pow(l, 2.2)))
 
 
             # Everything's shifted into place from the top two
