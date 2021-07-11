@@ -20,7 +20,7 @@ Hsl = namedtuple('Hsl', ('h', 's', 'l'))
 class Color(object):
     def __init__(self, r, g, b, proportion):
         # linear to sRGB - 2.2 Gamma
-        self.rgb = Rgb( int(round(pow(r, 2.2))), int(round(pow(g, 2.2))), int(round(pow(b, 2.2))) )
+        #self.rgb = Rgb( int(round(pow(r, 2.2))), int(round(pow(g, 2.2))), int(round(pow(b, 2.2))) )
         #self.rgb = Rgb( r,g,b )
         self.proportion = proportion
     
