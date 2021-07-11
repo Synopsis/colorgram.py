@@ -19,7 +19,8 @@ Hsl = namedtuple('Hsl', ('h', 's', 'l'))
 
 class Color(object):
     def __init__(self, r, g, b, proportion):
-        self.rgb = Rgb(r, g, b)
+        # linear to sRGB - 2.2 Gamma
+	self.rgb = Rgb( pow(r, 2.2), pow(g, 2.2), pow(b, 2.2) )
         self.proportion = proportion
     
     def __repr__(self):
@@ -60,6 +61,12 @@ def sample(image):
             # 0bYYhhllrrggbb - luminance, hue, luminosity, red, green, blue.
 
             r, g, b = pixels[x, y][:3]
+
+	    #linearize before sampling
+	    r = pow(r, 1.0/2.2)
+	    g = pow(g, 1.0/2.2)
+	    b = pow(b, 1.0/2.2)
+
             h, s, l = hsl(r, g, b)
             # Standard constants for converting RGB to relative luminance.
             Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
@@ -78,9 +85,9 @@ def sample(image):
             # original the "error" exists here too. Add back in if it is
             # ever fixed in colorgram.js.
 
-            # packed |= (r & top_two_bits) >> 2
-            # packed |= (g & top_two_bits) >> 4
-            # packed |= (b & top_two_bits) >> 6
+            packed |= (r & top_two_bits) >> 2
+            packed |= (g & top_two_bits) >> 4
+            packed |= (b & top_two_bits) >> 6
             # print "Pixel #{}".format(str(y * width + x))
             # print "h: {}, s: {}, l: {}".format(str(h), str(s), str(l))
             # print "R: {}, G: {}, B: {}".format(str(r), str(g), str(b))
