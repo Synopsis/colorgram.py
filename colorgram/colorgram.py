@@ -47,10 +47,10 @@ def extract(f, number_of_colors):
     return get_colors(samples, used, number_of_colors)
 
 def linearize(sample):
-    return int( round( pow( sample/255.0, 1.0/2.2) / 255.0)
+    return int( round( pow( sample/255.0, 1.0/2.2) / 255.0))
 
 def gamma(sample):
-    return int( round( pow( sample/255.0, 2.2) / 255.0)
+    return int( round( pow( sample/255.0, 2.2) / 255.0))
 
 def sample(image):
     top_two_bits = 0b11000000
