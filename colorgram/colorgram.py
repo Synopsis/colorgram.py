@@ -20,8 +20,8 @@ Hsl = namedtuple('Hsl', ('h', 's', 'l'))
 class Color(object):
     def __init__(self, r, g, b, proportion):
         # linear to sRGB - 2.2 Gamma
-        #self.rgb = Rgb( int(round(pow(r, 2.2))), int(round(pow(g, 2.2))), int(round(pow(b, 2.2))) )
-        self.rgb = Rgb( r,g,b )
+        self.rgb = Rgb( int(round(pow(r, 2.2))), int(round(pow(g, 2.2))), int(round(pow(b, 2.2))) )
+        #self.rgb = Rgb( r,g,b )
         self.proportion = proportion
     
     def __repr__(self):
@@ -62,18 +62,19 @@ def sample(image):
             # 0bYYhhllrrggbb - luminance, hue, luminosity, red, green, blue.
 
             r, g, b = pixels[x, y][:3]
-            #linearize before sampling
-            #r = int(round(pow(r, 2.2)))
-            #g = int(round(pow(g, 2.2)))
-            #b = int(round(pow(b, 2.2)))
-
             h, s, l = hsl(r, g, b)
+
+            #linearize before sampling
+            r = int(round(pow(r, 1.0/2.2)))
+            g = int(round(pow(g, 1.0/2.2)))
+            b = int(round(pow(b, 1.0/2.2)))
+
             # Standard constants for converting RGB to relative luminance.
 #            Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
 
-            #Y = int(round(pow(Y, 2.2)))
-            #h = int(round(pow(h, 2.2)))
-            #l = int(round(pow(l, 2.2)))
+            h = int(round(pow(h, 1.0/2.2)))
+            s = int(round(pow(s, 1.0/2.2)))
+            l = int(round(pow(l, 1.0/2.2)))
 
 
             # Everything's shifted into place from the top two
