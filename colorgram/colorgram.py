@@ -157,6 +157,17 @@ def get_colors(samples, used, number_of_colors):
         color.proportion /= pixels
     return colors
 
+def map_range(value, leftMin, leftMax, rightMin, rightMax):
+    # Figure out how 'wide' each range is
+    leftSpan = leftMax - leftMin
+    rightSpan = rightMax - rightMin
+
+    # Convert the left range into a 0-1 range (float)
+    valueScaled = float(value - leftMin) / float(leftSpan)
+
+    # Convert the 0-1 range into a value in the right range.
+    return rightMin + (valueScaled * rightSpan)
+
 def oklab(r, g, b):
     _r = r / 255.0
     _g = g / 255.0
@@ -174,7 +185,10 @@ def oklab(r, g, b):
     l = 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_
     m = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_
     s = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_
-    return int(l * 255), int(m * 255) , int(s * 255) 
+    l = int( map_range(l, 0.0, 1.0, 0, 255) )
+    m = int( map_range(m, -0.233, 0.276, 0, 255) )
+    s = int( map_range(s, -0.311, 0.198, 0,  255) )
+    return l, m, s 
 
 
 def hsl(r, g, b):
