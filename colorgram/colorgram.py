@@ -179,7 +179,7 @@ def oklab(r, g, b):
 
 def hsl(r, g, b):
     # This looks stupid, but it's way faster than min() and max().
-	    if r > g:
+    if r > g:
         if b > r:
             most, least = b, g
         elif b > g:
