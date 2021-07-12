@@ -91,7 +91,7 @@ def sample(image):
             _g = linearize(g)
             _b = linearize(b)
 
-            okl, oka, okb = oklab(_r,_g,_b)
+            #okl, oka, okb = oklab(_r,_g,_b)
 
             #Y = linearize(Y)
             #h = linearize(h)
@@ -113,9 +113,9 @@ def sample(image):
             # original the "error" exists here too. Add back in if it is
             # ever fixed in colorgram.js.
 
-            packed |= (okl & top_two_bits) >> 2
-            packed |= (oka & top_two_bits) >> 4
-            packed |= (okb & top_two_bits) >> 6
+            #packed |= (okl & top_two_bits) >> 2
+            #packed |= (oka & top_two_bits) >> 4
+            #packed |= (okb & top_two_bits) >> 6
             # print "Pixel #{}".format(str(y * width + x))
             # print "h: {}, s: {}, l: {}".format(str(h), str(s), str(l))
             # print "R: {}, G: {}, B: {}".format(str(r), str(g), str(b))
