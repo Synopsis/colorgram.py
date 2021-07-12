@@ -113,9 +113,9 @@ def sample(image):
             # original the "error" exists here too. Add back in if it is
             # ever fixed in colorgram.js.
 
-            packed |= (r & top_two_bits) >> 2
-            packed |= (g & top_two_bits) >> 4
-            packed |= (b & top_two_bits) >> 6
+            #packed |= (r & top_two_bits) >> 2
+            #packed |= (g & top_two_bits) >> 4
+            #packed |= (b & top_two_bits) >> 6
             # print "Pixel #{}".format(str(y * width + x))
             # print "h: {}, s: {}, l: {}".format(str(h), str(s), str(l))
             # print "R: {}, G: {}, B: {}".format(str(r), str(g), str(b))
