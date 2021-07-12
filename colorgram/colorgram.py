@@ -47,7 +47,7 @@ def extract(f, number_of_colors):
     return get_colors(samples, used, number_of_colors)
 
 def linearize(sample):
-    x = sample / 255.0
+    x = float(sample) / 255.0
     if x >= 0.0031308:
         x = (1.055) * pow(x, (1.0/2.4)) - 0.055
     else:
@@ -57,7 +57,7 @@ def linearize(sample):
 #    return int( round( pow( sample/255.0, 1.0/2.2) * 255.0))
 
 def gamma(sample):
-    x = sample / 255.0
+    x = float(sample) / 255.0
     if  x >= 0.04045:
         x = pow( ((x + 0.055)/(1 + 0.055)), 2.4)
     else:
@@ -87,11 +87,11 @@ def sample(image):
             #Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
 
             #linearize before sampling
-            _r = linearize(r)
-            _g = linearize(g)
-            _b = linearize(b)
+            #_r = linearize(r)
+            #_g = linearize(g)
+            #_b = linearize(b)
 
-            okl, oka, okb = oklab(_r,_g,_b)
+            okl, oka, okb = oklab(r,g,b)
 
             #Y = linearize(Y)
             #h = linearize(h)
@@ -123,9 +123,9 @@ def sample(image):
             # print "Packed: {}, binary: {}".format(str(packed), bin(packed)[2:])
             # print
             packed *= 4
-            samples[packed]     += r
-            samples[packed + 1] += g
-            samples[packed + 2] += b
+            samples[packed]     += gamma(r)
+            samples[packed + 1] += gamma(g)
+            samples[packed + 2] += gamma(b)
             samples[packed + 3] += 1
     return samples
 
