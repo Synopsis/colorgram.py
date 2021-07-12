@@ -5,7 +5,7 @@ from __future__ import division
 
 import array
 from collections import namedtuple
-from PIL import Image. ImageFilter
+from PIL import Image, ImageFilter
 
 import sys
 if sys.version_info[0] <= 2:
