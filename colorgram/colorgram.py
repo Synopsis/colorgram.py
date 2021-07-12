@@ -40,7 +40,7 @@ def extract(f, number_of_colors):
     image = f if isinstance(f, Image.Image) else Image.open(f)
     if image.mode not in ('RGB', 'RGBA', 'RGBa'):
         image = image.convert('RGB')
-    image = image.filter(ImageFilter.GaussianBlur(radius = 3))    
+    #image = image.filter(ImageFilter.GaussianBlur(radius = 3))    
     samples = sample(image)
     used = pick_used(samples)
     used.sort(key=lambda x: x[0], reverse=True)
