@@ -101,9 +101,9 @@ def sample(image):
 
             # Everything's shifted into place from the top two
             # bits' original position - that is, bits 7-8.
-            packed  = (okl & top_two_bits) << 4
-            packed |= (oka & top_two_bits) << 2
-            packed |= (okb & top_two_bits) << 0
+            packed  = (_r & top_two_bits) << 4
+            packed |= (_g & top_two_bits) << 2
+            packed |= (_b & top_two_bits) << 0
 
             # Due to a bug in the original colorgram.js, RGB isn't included.
             # The original author tries using negative bit shifts, while in
