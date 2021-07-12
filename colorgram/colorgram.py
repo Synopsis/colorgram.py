@@ -81,26 +81,29 @@ def sample(image):
             # 0bYYhhllrrggbb - luminance, hue, luminosity, red, green, blue.
 
             r, g, b = pixels[x, y][:3]
-            h, s, l = hsl(r, g, b)
+            #h, s, l = hsl(r, g, b)
 
             # Standard constants for converting RGB to relative luminance.
-            Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
+            #Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
 
             #linearize before sampling
             r = linearize(r)
             g = linearize(g)
             b = linearize(b)
 
+            l, a, b = oklab(r,g,b)
+
             #Y = linearize(Y)
-            h = linearize(h)
-            s = linearize(s)
+            #h = linearize(h)
+            #s = linearize(s)
             #l = linearize(l)
+	
 
             # Everything's shifted into place from the top two
             # bits' original position - that is, bits 7-8.
-            packed  = (h & top_two_bits) << 4
-            packed |= (s & top_two_bits) << 2
-            packed |= (Y & top_two_bits) << 0
+            packed  = (l & top_two_bits) << 4
+            packed |= (a & top_two_bits) << 2
+            packed |= (b & top_two_bits) << 0
 
             # Due to a bug in the original colorgram.js, RGB isn't included.
             # The original author tries using negative bit shifts, while in
@@ -153,6 +156,22 @@ def get_colors(samples, used, number_of_colors):
     for color in colors:
         color.proportion /= pixels
     return colors
+
+def oklab(r, g, b):
+    l = 0.4122214708f * r + 0.5363325363f * g + 0.0514459929f * b
+    m = 0.2119034982f * r + 0.6806995451f * g + 0.1073969566f * b
+    s = 0.0883024619f * r + 0.2817188376f * g + 0.6299787005f * b
+
+    l_ = pow(l, 1.0/3.0)
+    m_ = pow(m, 1.0/3.0)
+    s_ = pow(s, 1.0/3.0)
+
+    
+    l = 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_
+    m = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_
+    s = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_
+    return int(l * 255), int(m * 255) , int(s * 255) 
+
 
 def hsl(r, g, b):
     # This looks stupid, but it's way faster than min() and max().
