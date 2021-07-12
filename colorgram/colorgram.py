@@ -87,11 +87,11 @@ def sample(image):
             #Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
 
             #linearize before sampling
-            #_r = linearize(r)
-            #_g = linearize(g)
-            #_b = linearize(b)
+            _r = linearize(r)
+            _g = linearize(g)
+            _b = linearize(b)
 
-            okl, oka, okb = oklab(r,g,b)
+            okl, oka, okb = oklab(_r,_g,_b)
 
             #Y = linearize(Y)
             #h = linearize(h)
@@ -101,9 +101,9 @@ def sample(image):
 
             # Everything's shifted into place from the top two
             # bits' original position - that is, bits 7-8.
-            packed  = (r & top_two_bits) << 4
-            packed |= (g & top_two_bits) << 2
-            packed |= (b & top_two_bits) << 0
+            packed  = (okl & top_two_bits) << 4
+            packed |= (oka & top_two_bits) << 2
+            packed |= (okb & top_two_bits) << 0
 
             # Due to a bug in the original colorgram.js, RGB isn't included.
             # The original author tries using negative bit shifts, while in
@@ -113,9 +113,9 @@ def sample(image):
             # original the "error" exists here too. Add back in if it is
             # ever fixed in colorgram.js.
 
-            packed |= (okl & top_two_bits) >> 2
-            packed |= (oka & top_two_bits) >> 4
-            packed |= (okb & top_two_bits) >> 6
+            packed |= (_r & top_two_bits) >> 2
+            packed |= (_g & top_two_bits) >> 4
+            packed |= (_b & top_two_bits) >> 6
             # print "Pixel #{}".format(str(y * width + x))
             # print "h: {}, s: {}, l: {}".format(str(h), str(s), str(l))
             # print "R: {}, G: {}, B: {}".format(str(r), str(g), str(b))
@@ -123,9 +123,9 @@ def sample(image):
             # print "Packed: {}, binary: {}".format(str(packed), bin(packed)[2:])
             # print
             packed *= 4
-            samples[packed]     += gamma(r)
-            samples[packed + 1] += gamma(g)
-            samples[packed + 2] += gamma(b)
+            samples[packed]     += (r)
+            samples[packed + 1] += (g)
+            samples[packed + 2] += (b)
             samples[packed + 3] += 1
     return samples
 
