@@ -20,8 +20,8 @@ Hsl = namedtuple('Hsl', ('h', 's', 'l'))
 class Color(object):
     def __init__(self, r, g, b, proportion):
         # linear to sRGB - 2.2 Gamma
-        self.rgb = Rgb( gamma(r), gamma(g), gamma(b) )
-        #self.rgb = Rgb( r,g,b )
+        #self.rgb = Rgb( gamma(r), gamma(g), gamma(b) )
+        self.rgb = Rgb( r,g,b )
         self.proportion = proportion
     
     def __repr__(self):
@@ -87,11 +87,11 @@ def sample(image):
             #Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
 
             #linearize before sampling
-            r = linearize(r)
-            g = linearize(g)
-            b = linearize(b)
+            _r = linearize(r)
+            _g = linearize(g)
+            _b = linearize(b)
 
-            okl, oka, okb = oklab(r,g,b)
+            okl, oka, okb = oklab(_r,_g,_b)
 
             #Y = linearize(Y)
             #h = linearize(h)
@@ -113,9 +113,9 @@ def sample(image):
             # original the "error" exists here too. Add back in if it is
             # ever fixed in colorgram.js.
 
-            #packed |= (r & top_two_bits) >> 2
-            #packed |= (g & top_two_bits) >> 4
-            #packed |= (b & top_two_bits) >> 6
+            packed |= (r & top_two_bits) >> 2
+            packed |= (g & top_two_bits) >> 4
+            packed |= (b & top_two_bits) >> 6
             # print "Pixel #{}".format(str(y * width + x))
             # print "h: {}, s: {}, l: {}".format(str(h), str(s), str(l))
             # print "R: {}, G: {}, B: {}".format(str(r), str(g), str(b))
