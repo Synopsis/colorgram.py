@@ -101,9 +101,9 @@ def sample(image):
 
             # Everything's shifted into place from the top two
             # bits' original position - that is, bits 7-8.
-            packed  = (okl & top_two_bits) << 4
-            packed |= (oka & top_two_bits) << 2
-            packed |= (okb & top_two_bits) << 0
+            packed  = (_r & top_two_bits) << 4
+            packed |= (_g & top_two_bits) << 2
+            packed |= (_b & top_two_bits) << 0
 
             # Due to a bug in the original colorgram.js, RGB isn't included.
             # The original author tries using negative bit shifts, while in
@@ -113,9 +113,9 @@ def sample(image):
             # original the "error" exists here too. Add back in if it is
             # ever fixed in colorgram.js.
 
-            packed |= (r & top_two_bits) >> 2
-            packed |= (g & top_two_bits) >> 4
-            packed |= (b & top_two_bits) >> 6
+            packed |= (okl & top_two_bits) >> 2
+            packed |= (oka & top_two_bits) >> 4
+            packed |= (okb & top_two_bits) >> 6
             # print "Pixel #{}".format(str(y * width + x))
             # print "h: {}, s: {}, l: {}".format(str(h), str(s), str(l))
             # print "R: {}, G: {}, B: {}".format(str(r), str(g), str(b))
@@ -179,7 +179,7 @@ def oklab(r, g, b):
 
 def hsl(r, g, b):
     # This looks stupid, but it's way faster than min() and max().
-    if r > g:
+	    if r > g:
         if b > r:
             most, least = b, g
         elif b > g:
