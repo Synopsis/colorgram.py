@@ -20,8 +20,8 @@ Hsl = namedtuple('Hsl', ('h', 's', 'l'))
 class Color(object):
     def __init__(self, r, g, b, proportion):
         # linear to sRGB - 2.2 Gamma
-        #self.rgb = Rgb( gamma(r), gamma(g), gamma(b) )
-        self.rgb = Rgb( r,g,b )
+        self.rgb = Rgb( gamma(r), gamma(g), gamma(b) )
+        #self.rgb = Rgb( r,g,b )
         self.proportion = proportion
     
     def __repr__(self):
@@ -123,9 +123,9 @@ def sample(image):
             # print "Packed: {}, binary: {}".format(str(packed), bin(packed)[2:])
             # print
             packed *= 4
-            samples[packed]     += (r)
-            samples[packed + 1] += (g)
-            samples[packed + 2] += (b)
+            samples[packed]     += (_r)
+            samples[packed + 1] += (_g)
+            samples[packed + 2] += (_b)
             samples[packed + 3] += 1
     return samples
 
