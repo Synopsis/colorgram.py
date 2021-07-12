@@ -70,21 +70,22 @@ def sample(image):
             r, g, b = pixels[x, y][:3]
             h, s, l = hsl(r, g, b)
 
+            # Standard constants for converting RGB to relative luminance.
+            Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
+
             #linearize before sampling
             r = linearize(r)
             g = linearize(g)
             b = linearize(b)
 
-            # Standard constants for converting RGB to relative luminance.
-#            Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
+            Y = linearize(Y)
             h = linearize(h)
             s = linearize(s)
             l = linearize(l)
 
-
             # Everything's shifted into place from the top two
             # bits' original position - that is, bits 7-8.
-            packed  = (h & top_two_bits) << 4
+            packed  = Y & top_two_bits) << 4
             packed |= (s & top_two_bits) << 2
             packed |= (l & top_two_bits) << 0
 
