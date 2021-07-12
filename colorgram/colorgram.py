@@ -78,10 +78,10 @@ def sample(image):
             g = linearize(g)
             b = linearize(b)
 
-            Y = linearize(Y)
+            #Y = linearize(Y)
             h = linearize(h)
             s = linearize(s)
-            l = linearize(l)
+            #l = linearize(l)
 
             # Everything's shifted into place from the top two
             # bits' original position - that is, bits 7-8.
