@@ -85,7 +85,7 @@ def sample(image):
 
             # Everything's shifted into place from the top two
             # bits' original position - that is, bits 7-8.
-            packed  = Y & top_two_bits) << 4
+            packed  = (Y & top_two_bits) << 4
             packed |= (s & top_two_bits) << 2
             packed |= (l & top_two_bits) << 0
 
