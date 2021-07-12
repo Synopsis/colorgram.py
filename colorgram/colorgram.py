@@ -49,7 +49,7 @@ def extract(f, number_of_colors):
 def linearize(sample):
     x = sample / 255.0
     if x >= 0.0031308:
-        x = (1.055) * pow(x, (1.0/2.4) - 0.055
+        x = (1.055) * pow(x, (1.0/2.4)) - 0.055
     else:
         x = 12.92 * x
 
