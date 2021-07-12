@@ -158,6 +158,9 @@ def get_colors(samples, used, number_of_colors):
     return colors
 
 def oklab(r, g, b):
+    r = r / 255.0
+    g = g / 255.0
+    b = b / 255.0
     l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b
     m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b
     s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b
