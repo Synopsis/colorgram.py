@@ -85,9 +85,9 @@ def sample(image):
 
             # Everything's shifted into place from the top two
             # bits' original position - that is, bits 7-8.
-            packed  = (Y & top_two_bits) << 4
+            packed  = (h & top_two_bits) << 4
             packed |= (s & top_two_bits) << 2
-            packed |= (l & top_two_bits) << 0
+            packed |= (Y & top_two_bits) << 0
 
             # Due to a bug in the original colorgram.js, RGB isn't included.
             # The original author tries using negative bit shifts, while in
