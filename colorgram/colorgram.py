@@ -92,15 +92,19 @@ def sample(image):
             # 0bYYhhllrrggbb - luminance, hue, luminosity, red, green, blue.
 
             r, g, b = pixels[x, y][:3]
-            #h, s, l = hsl(r, g, b)
+            h, s, l = hsl(r, g, b)
 
             # Standard constants for converting RGB to relative luminance.
-            #Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
+            Y = int(r * 0.2126 + g * 0.7152 + b * 0.0722)
+
+            packed  = (Y & top_two_bits) << 4
+            packed |= (h & top_two_bits) << 2
+            packed |= (l & top_two_bits) << 0
 
             #linearize before sampling
-            _r = linearize(r)
-            _g = linearize(g)
-            _b = linearize(b)
+            #_r = linearize(r)
+            #_g = linearize(g)
+            #_b = linearize(b)
 
             #okl, oka, okb = oklab(_r,_g,_b)
 
@@ -112,9 +116,9 @@ def sample(image):
 
             # Everything's shifted into place from the top two
             # bits' original position - that is, bits 7-8.
-            packed  = (_r & top_two_bits) << 4
-            packed |= (_g & top_two_bits) << 2
-            packed |= (_b & top_two_bits) << 0
+            #packed  = (_r & top_two_bits) << 4
+            #packed |= (_g & top_two_bits) << 2
+            #packed |= (_b & top_two_bits) << 0
 
             # Due to a bug in the original colorgram.js, RGB isn't included.
             # The original author tries using negative bit shifts, while in
