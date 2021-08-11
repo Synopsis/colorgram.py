@@ -5,7 +5,7 @@ from __future__ import division
 
 import array
 from collections import namedtuple
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageCms
 
 import sys
 if sys.version_info[0] <= 2:
@@ -41,10 +41,21 @@ def extract(f, number_of_colors):
     if image.mode not in ('RGB', 'RGBA', 'RGBa'):
         image = image.convert('RGB')
     #image = image.filter(ImageFilter.GaussianBlur(radius = 3))    
+    image = convert_to_srgb(image)
     samples = sample(image)
     used = pick_used(samples)
     used.sort(key=lambda x: x[0], reverse=True)
     return get_colors(samples, used, number_of_colors)
+
+def convert_to_srgb(img):
+    '''Convert PIL image to sRGB color space (if possible)'''
+    icc = img.info.get('icc_profile', '')
+    if icc:
+        io_handle = io.BytesIO(icc)     # virtual file
+        src_profile = ImageCms.ImageCmsProfile(io_handle)
+        dst_profile = ImageCms.createProfile('sRGB')
+        img = ImageCms.profileToProfile(img, src_profile, dst_profile)
+    return img
 
 def linearize(sample):
     x = float(sample) / 255.0
