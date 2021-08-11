@@ -138,9 +138,9 @@ def sample(image):
             # print "Packed: {}, binary: {}".format(str(packed), bin(packed)[2:])
             # print
             packed *= 4
-            samples[packed]     += (_r)
-            samples[packed + 1] += (_g)
-            samples[packed + 2] += (_b)
+            samples[packed]     += (r)
+            samples[packed + 1] += (g)
+            samples[packed + 2] += (b)
             samples[packed + 3] += 1
     return samples
 
