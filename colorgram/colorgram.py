@@ -16,6 +16,7 @@ else:
 
 Rgb = namedtuple('Rgb', ('r', 'g', 'b'))
 Hsl = namedtuple('Hsl', ('h', 's', 'l'))
+OKLab = namedtuple('oklab' ('l', 'a', 'b'))
 
 class Color(object):
     def __init__(self, r, g, b, proportion):
@@ -35,6 +36,14 @@ class Color(object):
         except AttributeError:
             self._hsl = Hsl(*hsl(*self.rgb))
             return self._hsl
+
+    @property
+    def oklab(self):
+        try:
+            return self._oklab
+        except AttributeError:
+            self._oklab = OKLab(* oklab(* linearize(self.rgb) ) )
+            return self._oklab
 
 def extract(f, number_of_colors):
     image = f if isinstance(f, Image.Image) else Image.open(f)
