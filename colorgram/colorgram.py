@@ -242,7 +242,7 @@ def hsl(r, g, b):
             h = (r - g) * 255 // diff + 1020
         h //= 6
     
-    return h, s, l
+    return (h/255.0 * 360.0), (s/255.0 * 100.0), (l/255.0 * 100.0)
 
 # Useful snippet for testing values:
 # print "Pixel #{}".format(str(y * width + x))
